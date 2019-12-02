@@ -16,6 +16,11 @@ public class StringHelper {
         return new String(tempArray);
     }
 
+    public static List<Integer> getListOfNumbersSeperatedBy(String input, String regex) {
+        String[] split = input.split(input);
+        return Arrays.stream(input.split(regex)).map(Integer::parseInt).collect(Collectors.toList());
+    }
+
     public static List<Integer> getNumbersFromStringOnePerLine(String input) {
         String[] split = input.split("\n");
         return Arrays.stream(split).map(Integer::parseInt).collect(Collectors.toList());

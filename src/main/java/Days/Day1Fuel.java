@@ -25,6 +25,7 @@ public class Day1Fuel {
                 .sum();
     }
 
+
     static int calculateTotalFuelForModuel(String moduleMass) {
         // Get starting fuel
         int totalFuel = getFuelRequiredForMass(Integer.parseInt(moduleMass));
