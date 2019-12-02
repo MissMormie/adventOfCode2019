@@ -9,16 +9,17 @@ import java.util.stream.Collectors;
 public class Day2_1202ProgramAlarm {
 
     public static void main(String[] args) {
-        System.out.println("answer A: " + runA(getInput(), false));
+        System.out.println("answer A: " + runA(getInput(), 12, 2));
         System.out.println("answer B: " + runB(getInput()));
     }
 
-    public static int runA(String input, boolean skip1202) {
-        String[] split = input.split(input);
-        List<Integer> memoryState = Arrays.stream(input.split(",")).map(Integer::parseInt).collect(Collectors.toList());
-        if(!skip1202) {
-            memoryState.set(1, 12);
-            memoryState.set(2, 2);
+    public static int runA(String input, Integer noun, Integer verb) {
+        List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
+        if(noun != null) {
+            memoryState.set(1, noun);
+        }
+        if ( verb != null) {
+            memoryState.set(2, verb);
         }
         runProgram(memoryState);
 
@@ -27,8 +28,8 @@ public class Day2_1202ProgramAlarm {
 
     private static void runProgram(List<Integer> inputList) {
         boolean done = false;
-        for(int i =0; i<  inputList.size() && !done; i += 4) {
-            done = doIntCodeProgram(inputList, i );
+        for(int pointer = 0; pointer<  inputList.size() && !done; pointer += 4) {
+            done = doIntCodeProgram(inputList, pointer );
         }
     }
 
