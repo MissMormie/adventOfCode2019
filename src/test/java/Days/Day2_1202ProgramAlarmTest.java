@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Day21202ProgramAlarmTest {
+class Day2_1202ProgramAlarmTest {
 
     @Test
     void doIntCodeProgram() {

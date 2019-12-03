@@ -1,5 +1,6 @@
 package helpers;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,10 @@ public class Coordinate implements Comparable<Coordinate> {
     public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Point getPoint() {
+        return new Point(x, y);
     }
 
     public int getManhattanDistance(Coordinate coords) {

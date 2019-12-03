@@ -2,7 +2,7 @@ package Days;
 
 import java.util.Arrays;
 
-public class Day1Fuel {
+public class Day1_Fuel {
 
     public static void main(String[] args) {
         System.out.println("answer A: " + runA(getInput()));
@@ -21,7 +21,7 @@ public class Day1Fuel {
 
     public static int runB(String input) {
         return Arrays.stream(input.split("\n"))
-                .mapToInt(Day1Fuel::calculateTotalFuelForModuel)
+                .mapToInt(Day1_Fuel::calculateTotalFuelForModuel)
                 .sum();
     }
 
