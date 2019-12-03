@@ -5,16 +5,14 @@ import helpers.Coordinate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day3_CrossedWires {
+    public static final SmartCoordinate startingCoordinate = new SmartCoordinate(0, 0, 0);
 
     public static void main(String[] args) {
         System.out.println("answer A: " + runA(getInput())); // 2180
         System.out.println("answer B: " + runB(getInput())); // 112316
     }
-
-    public static final SmartCoordinate startingCoordinate = new SmartCoordinate(0,0, 0);
 
     public static int runA(String input) {
         String[] split = input.split("\n");
@@ -41,36 +39,24 @@ public class Day3_CrossedWires {
     public static void addRouteLineToCoords(String routePart, List<SmartCoordinate> coordinateList) {
         // example routeparts: R1008 L339 U12 D965
         int steps = Integer.parseInt(routePart.substring(1));
-        switch (routePart.substring(0,1)) {
-            case "R": createHorizontalLineFromLastCoordinate(steps, coordinateList); break;
-            case "L": createHorizontalLineFromLastCoordinate(-steps, coordinateList); break;
-            case "U": createVerticalLineFromLastCoordinate(steps, coordinateList); break;
-            case "D": createVerticalLineFromLastCoordinate(-steps, coordinateList);break;
-            default: throw new UnsupportedOperationException("This isn't a direction." + routePart.substring(0,1));
+        switch (routePart.substring(0, 1)) {
+            case "R": createLineFromLastCoordinate(steps, coordinateList, true); break;
+            case "L": createLineFromLastCoordinate(-steps, coordinateList, true); break;
+            case "U": createLineFromLastCoordinate(steps, coordinateList, false); break;
+            case "D": createLineFromLastCoordinate(-steps, coordinateList, false); break;
+            default:
+                throw new UnsupportedOperationException("This isn't a direction." + routePart.substring(0, 1));
         }
     }
 
-    public static void createHorizontalLineFromLastCoordinate(int steps, List<SmartCoordinate> coordinateList) {
-        int modifier = getModifier(steps);
-        SmartCoordinate startingCoordinate = coordinateList.get(coordinateList.size() -1);
-        for(int i = 1; i <= steps * modifier; i++) {
-            coordinateList.add(new SmartCoordinate(startingCoordinate.x +(i * modifier), startingCoordinate.y, startingCoordinate.stepsAlongRoute + i));
-        }
-    }
+    public static void createLineFromLastCoordinate(int steps, List<SmartCoordinate> coordinateList, boolean horizontal) {
+        int modifier = steps < 0 ? -1 : 1;
+        SmartCoordinate startingCoordinate = coordinateList.get(coordinateList.size() - 1);
 
-    private static int getModifier(int steps) {
-        int modifier = 1;
-        if (steps < 0) {
-            modifier = -1;
-        }
-        return modifier;
-    }
-
-    public static void createVerticalLineFromLastCoordinate(int steps, List<SmartCoordinate> coordinateList) {
-        int modifier = getModifier(steps);
-        SmartCoordinate startingCoordinate = coordinateList.get(coordinateList.size() -1);
-        for(int i = 1; i <= steps * modifier; i++) {
-            coordinateList.add(new SmartCoordinate(startingCoordinate.x, startingCoordinate.y +(i * modifier), startingCoordinate.stepsAlongRoute + i));
+        for (int i = 1; i <= steps * modifier; i++) {
+            int x = horizontal ? startingCoordinate.x + (i * modifier) : startingCoordinate.x;
+            int y = horizontal ? startingCoordinate.y : startingCoordinate.y + (i * modifier);
+            coordinateList.add(new SmartCoordinate(x, y, startingCoordinate.stepsAlongRoute + i));
         }
     }
 
