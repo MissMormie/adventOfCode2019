@@ -26,9 +26,5 @@ public class boilerplate {
 
     public static String getInput() {
         return "";
-
     }
-
-
-
 }
