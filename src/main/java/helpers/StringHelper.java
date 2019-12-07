@@ -44,5 +44,4 @@ public class StringHelper {
         numbers.forEach(linkedList::addObject);
         return linkedList;
     }
-
 }

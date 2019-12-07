@@ -8,8 +8,17 @@ import java.util.stream.IntStream;
 
 public class Day4_LostPassword {
     public static void main(String[] args) {
-        System.out.println("answer A: " + runA(getInput()));
-        System.out.println("answer B: " + runB(getInput()));
+        long startTime = System.nanoTime();
+        System.out.print("answer A: " + runA(getInput()));
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
+
+        startTime = System.nanoTime();
+        System.out.print("answer B: " + runB(getInput()));
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
     }
 
     public static int runA(String input) {

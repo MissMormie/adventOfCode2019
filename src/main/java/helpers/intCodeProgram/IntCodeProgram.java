@@ -37,11 +37,11 @@ public class IntCodeProgram {
 
     public int processInstruction(List<Integer> memoryState, int startingIndex) {
         int opCode = memoryState.get(startingIndex);
-        Instruction instruction = InstructionFactory.getInstruction(opCode);
+        Instruction instruction = InstructionFactory.getInstruction(opCode, startingIndex);
         if(instruction instanceof FinalizeInstruction) {
             processing = false;
         }
-        instruction.run(memoryState, startingIndex);
+        instruction.run(memoryState);
         return instruction.getNumberOfParametersAndOpcode();
     }
 

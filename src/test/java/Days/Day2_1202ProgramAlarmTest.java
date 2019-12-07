@@ -13,19 +13,19 @@ class Day2_1202ProgramAlarmTest {
 
         input = "1,0,0,0,99";
         answer = 2;
-        assertEquals(answer, Day2_1202ProgramAlarm.runA(input, null, null), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day2_OverEngineeredSolution.runA(input, null, null), "input = " + input + " answer: " + answer);
 
         input = "2,3,0,3,99";
         answer = 2;
-        assertEquals(answer, Day2_1202ProgramAlarm.runA(input, null, null), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day2_OverEngineeredSolution.runA(input, null, null), "input = " + input + " answer: " + answer);
 
         input = "2,4,4,5,99,0";
         answer = 2;
-        assertEquals(answer, Day2_1202ProgramAlarm.runA(input, null, null), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day2_OverEngineeredSolution.runA(input, null, null), "input = " + input + " answer: " + answer);
 
         input = "1,1,1,4,99,5,6,0,99";
         answer = 30;
-        assertEquals(answer, Day2_1202ProgramAlarm.runA(input, null, null), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day2_OverEngineeredSolution.runA(input, null, null), "input = " + input + " answer: " + answer);
     }
 
 
