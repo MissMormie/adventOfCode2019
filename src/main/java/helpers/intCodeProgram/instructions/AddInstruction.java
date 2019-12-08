@@ -1,21 +1,25 @@
-package helpers.intCodeProgram;
+package helpers.intCodeProgram.instructions;
+
+import helpers.intCodeProgram.Instruction;
 
 import java.util.List;
 
 public class AddInstruction extends Instruction {
 
-    AddInstruction(int opcode, int startingIndex) {
+    public AddInstruction(int opcode, int startingIndex) {
         super(opcode, startingIndex);
     }
 
     @Override
-    int getNumberOfParametersAndOpcode() {
+    public int getNumberOfParametersAndOpcode() {
         return 4;
     }
 
     @Override
-    void run(List<Integer> memoryState) {
+    public int run(List<Integer> memoryState) {
         memoryState.set(getValueOfParam(3, memoryState),
                 getValueOfParam(1, memoryState) + getValueOfParam(2, memoryState));
+        return startingIndex + getNumberOfParametersAndOpcode();
     }
+
 }

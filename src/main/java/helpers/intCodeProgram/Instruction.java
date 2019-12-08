@@ -1,5 +1,9 @@
 package helpers.intCodeProgram;
 
+import helpers.intCodeProgram.instructions.JumpIfFalse;
+import helpers.intCodeProgram.instructions.JumpIfTrue;
+import helpers.intCodeProgram.instructions.OutputInstruction;
+
 import java.util.List;
 
 public abstract class Instruction {
@@ -8,20 +12,23 @@ public abstract class Instruction {
         POSITION, IMMEDIATE;
     }
 
-    int opcode;
+    public int opcode;
 
-    int startingIndex;
+    public int startingIndex;
 
-    Instruction(int opcode, int startingIndex) {
+    public Instruction(int opcode, int startingIndex) {
         this.opcode = opcode;
         this.startingIndex = startingIndex;
     }
 
-    abstract int getNumberOfParametersAndOpcode();
+    public abstract int getNumberOfParametersAndOpcode();
 
-    abstract void run(List<Integer> memoryState);
+    /**
+     * @return new pointer value
+     */
+    public abstract int run(List<Integer> memoryState);
 
-    int[] getParameters(List<Integer> memoryState, int startingIndex) {
+    public int[] getParameters(List<Integer> memoryState, int startingIndex) {
         int[] parameters = new int[getNumberOfParametersAndOpcode()];
         for(int i = 0; i < getNumberOfParametersAndOpcode(); i++) {
             parameters[i] = memoryState.get(startingIndex + i);
@@ -29,10 +36,14 @@ public abstract class Instruction {
         return parameters;
     }
 
-    int getValueOfParam(int paramPosition, List<Integer> memoryState) {
+    public int getValueOfParam(int paramPosition, List<Integer> memoryState) {
         // Get mode in which param is read
         ParameterMode parameterMode = ParameterMode.POSITION;
-        if(getNumberOfParametersAndOpcode() == paramPosition + 1) {
+
+        // This does something that seemed smart where it checks if it's the last parameter to see if it's a setter.
+        // That did no longer work for more complex opcodes, so i'm excluding those to prevent having to think.
+        if(getNumberOfParametersAndOpcode() == paramPosition + 1
+                && !(this instanceof OutputInstruction) && !(this instanceof JumpIfTrue) && !(this instanceof JumpIfFalse)  ) {
             parameterMode = ParameterMode.IMMEDIATE;
         }
 

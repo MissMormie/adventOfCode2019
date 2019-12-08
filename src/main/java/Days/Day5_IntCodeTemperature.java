@@ -7,31 +7,18 @@ import java.util.List;
 
 public class Day5_IntCodeTemperature {
 
-    public static void main(String[] args) {
-        long startTime = System.nanoTime();
-        System.out.print("answer A: " + runA(getInput(), null, null));
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
-
-        startTime = System.nanoTime();
-        System.out.print("answer B: " + runB(getInput()));
-        endTime = System.nanoTime();
-        duration = (endTime - startTime);
-        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
-    }
-
-    public static int runA(String input, Integer noun, Integer verb) { // 224 is too low
+    public static int runA(String input, Integer noun, Integer verb) { // 7286649
         List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
         IntCodeProgram intCodeProgram = runIntCodeProgram(memoryState, null, null);
 
-        return intCodeProgram.getMemoryState().get(0);
+        return intCodeProgram.getLastOutput();
     }
 
     public static IntCodeProgram runIntCodeProgram(List<Integer> memoryState, Integer noun, Integer verb) {
         IntCodeProgram intCodeProgram = new IntCodeProgram(memoryState);
         intCodeProgram.setNoun(noun);
         intCodeProgram.setVerb(verb);
+        intCodeProgram.addInput(1);
 
         intCodeProgram.runProgram();
         return intCodeProgram;
@@ -43,6 +30,20 @@ public class Day5_IntCodeTemperature {
 
         // DON'T FORGET TO ADD THE ANSWER
         return answer;
+    }
+
+    public static void main(String[] args) {
+        long startTime = System.nanoTime();
+        System.out.println("answer A: " + runA(getInput(), null, null));
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
+
+        startTime = System.nanoTime();
+        System.out.println("answer B: " + runB(getInput()));
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
     }
 
     public static String getInput() {

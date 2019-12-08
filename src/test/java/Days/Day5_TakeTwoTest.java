@@ -16,7 +16,7 @@ class Day5_TakeTwoTest {
         String input = "1002,5,3,5,99,33";
         List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
 
-        Day5_TakeTwo.runProgram(memoryState);
+        Day5_TakeTwo.runProgram(memoryState, 1);
         assertEquals( 99, memoryState.get(4));
     }
 
@@ -27,7 +27,7 @@ class Day5_TakeTwoTest {
         String input = "1002,5,3,0,3,0,1,1,3,0,99";
         List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
 
-        Day5_TakeTwo.runProgram(memoryState);
+        Day5_TakeTwo.runProgram(memoryState, 1);
 
         // Test succeeds if no exception is thrown. Either when 99 isn't reached or a wrong opcode is tried this throws an exception
 
@@ -39,7 +39,7 @@ class Day5_TakeTwoTest {
         String input = "1001,5,3,5,99,12";
         List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
 
-        Day5_TakeTwo.runProgram(memoryState);
+        Day5_TakeTwo.runProgram(memoryState,1 );
         assertEquals(15, memoryState.get(5));
     }
 
@@ -49,7 +49,7 @@ class Day5_TakeTwoTest {
         String input = "3,3,99,12";
         List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
 
-        Day5_TakeTwo.runProgram(memoryState);
+        Day5_TakeTwo.runProgram(memoryState,1 );
         assertEquals(1, memoryState.get(3));
     }
 
@@ -65,6 +65,15 @@ class Day5_TakeTwoTest {
         // Validate position mode. input 2 = 4. Get's position 4's value
         valueOfParam = Day5_TakeTwo.getValueOfParam(memoryState, 0, 1, IMMEDIATE);
         assertEquals(valueOfParam, 4);
+    }
+
+    @Test
+    void runInputDay2() {
+        String input = Day2_1202ProgramAlarm.getInputA();
+        List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
+
+        Day5_TakeTwo.runProgram(memoryState, 1);
+        assertEquals(3931283, memoryState.get(0));
     }
 
 }
