@@ -17,7 +17,7 @@ public class LessThanInstruction extends Instruction {
     @Override
     public int run(List<Integer> memoryState) {
         boolean lessThan = getValueOfParam(1, memoryState) < (getValueOfParam(2, memoryState));
-        memoryState.set(getValueOfParam(3, memoryState), lessThan ? 1 : 0);
+        memoryState.set(getValueOfParam(3, memoryState, true), lessThan ? 1 : 0);
 //        System.out.println("Less Than: Setting index: " + getValueOfParam(3, memoryState) + " to: " + (lessThan ? 1 : 0));
 
         return startingIndex + getNumberOfParametersAndOpcode();

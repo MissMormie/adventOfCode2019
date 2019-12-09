@@ -99,7 +99,7 @@ public class Day7_EngineeredAmplification {
 //        System.out.println("answer A: " + runA(getInput()));
         long endTime = System.nanoTime();
         long duration = (endTime - startTime);
-        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
+//        System.out.println(" took this amount of milliSeconds: " + duration / 1000000.0);
 
         startTime = System.nanoTime();
         System.out.println("answer B: " + runB(getInput()));

@@ -18,7 +18,7 @@ public class InputInstruction extends Instruction {
 
     @Override
     public int run(List<Integer> memoryState) {
-        memoryState.set(getValueOfParam(1, memoryState), input); // input hardcoded for now
+        memoryState.set(getValueOfParam(1, memoryState, true), input); // input hardcoded for now
         return startingIndex + getNumberOfParametersAndOpcode();
     }
 }

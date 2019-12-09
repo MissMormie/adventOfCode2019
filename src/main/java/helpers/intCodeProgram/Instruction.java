@@ -1,6 +1,5 @@
 package helpers.intCodeProgram;
 
-import Days.Day5_TakeTwo;
 import helpers.intCodeProgram.instructions.JumpIfFalse;
 import helpers.intCodeProgram.instructions.JumpIfTrue;
 import helpers.intCodeProgram.instructions.OutputInstruction;
@@ -21,10 +20,31 @@ public abstract class Instruction {
 
     public int relativeBase;
 
+    public ParameterMode[] parameterModes;
+
     public Instruction(int opcode, int startingIndex, int relativeBase) {
         this.opcode = opcode;
         this.startingIndex = startingIndex;
+        createParameterModes();
     }
+
+    private void createParameterModes() {
+        parameterModes = new ParameterMode[4];
+        parameterModes[1] = getParameterModes(opcode / 100 % 10) ;
+        parameterModes[2] = getParameterModes(opcode / 1000 % 10) ;
+        parameterModes[3] = getParameterModes(opcode / 10000 % 10) ;
+        }
+
+    private ParameterMode getParameterModes(int mode) {
+        if(mode == 0) {
+        return POSITION;
+        }
+        if(mode == 1) {
+        return IMMEDIATE;
+        }
+        // mode == 2
+        return RELATIVE;
+        }
 
     public abstract int getNumberOfParametersAndOpcode();
 
@@ -41,20 +61,7 @@ public abstract class Instruction {
         return parameters;
     }
 
-    public int getValueOfParam(int paramPosition, List<Integer> memoryState) {
-        ParameterMode parameterMode = getParameterMode(paramPosition);
 
-        if(!(10 * Math.pow(10, paramPosition) > opcode)) {
-
-            char[] b = String.valueOf(opcode).toCharArray();
-            int a = b[b.length - 2 - paramPosition] - 48;
-            parameterMode = a == 1 ? IMMEDIATE : POSITION;
-        }
-
-        int[] params = getParameters(memoryState, startingIndex);
-
-        return parameterMode == IMMEDIATE ? params[paramPosition]: memoryState.get(params[paramPosition]);
-    }
 
     private ParameterMode getParameterMode(int paramPosition) {
         // Get mode in which param is read
@@ -69,17 +76,20 @@ public abstract class Instruction {
         return parameterMode;
     }
 
-    public Integer getValueOfParam(List<Integer> integerList, int startingIndex, int i, ParameterMode paramMode) {
-        if(paramMode == POSITION) {
-            return getValueOfParamPositionMode(integerList, startingIndex, i);
-        }
-        if(paramMode == IMMEDIATE) {
-            return getValueOfParamImmediateMode(integerList, startingIndex, i);
-        }
+    public int getValueOfParam(int paramPosition, List<Integer> memoryState) {
+        return getValueOfParam(paramPosition, memoryState, false);
+    }
+
+    public Integer getValueOfParam(int paramPosition, List<Integer> integerList, boolean isSetter) {
+        ParameterMode paramMode = parameterModes[paramPosition];
         if (paramMode == RELATIVE) {
-            return getValueOfParamRelativeMode(integerList, startingIndex, i);
+            return getValueOfParamRelativeMode(integerList, startingIndex, paramPosition);
         }
-        throw new IllegalStateException("Unknown parameter mode" + paramMode);
+        if(paramMode == POSITION && !isSetter) {
+            return getValueOfParamPositionMode(integerList, startingIndex, paramPosition);
+        }
+        // paramMode == IMMEDIATE
+        return getValueOfParamImmediateMode(integerList, startingIndex, paramPosition);
     }
 
     private Integer getValueOfParamImmediateMode(List<Integer> integerList, int startingIndex, int i) {

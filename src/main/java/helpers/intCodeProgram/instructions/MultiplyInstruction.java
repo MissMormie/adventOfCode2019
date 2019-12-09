@@ -16,7 +16,7 @@ public class MultiplyInstruction extends Instruction {
 
     @Override
     public int run(List<Integer> memoryState) {
-        memoryState.set(getValueOfParam(3, memoryState) ,
+        memoryState.set(getValueOfParam(3, memoryState, true) ,
                 getValueOfParam(1, memoryState) * getValueOfParam(2, memoryState));
         return startingIndex + getNumberOfParametersAndOpcode();
 
