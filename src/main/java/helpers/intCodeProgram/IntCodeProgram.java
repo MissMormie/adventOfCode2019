@@ -12,6 +12,7 @@ public class IntCodeProgram {
     public Integer lastOutput;
     private boolean finished = false;
     private boolean waiting = false;
+    private int relativeBase = 0;
 
     public IntCodeProgram handOutputTo;
 
@@ -30,13 +31,13 @@ public class IntCodeProgram {
     }
 
     public void setNoun(Integer noun) {
-        if(noun != null) {
+        if (noun != null) {
             memoryState.set(1, noun);
         }
     }
 
     public void setVerb(Integer verb) {
-        if(verb != null) {
+        if (verb != null) {
             memoryState.set(2, verb);
         }
     }
@@ -57,15 +58,15 @@ public class IntCodeProgram {
     public int processInstruction(List<Integer> memoryState, int startingIndex) throws IllegalStateException {
         waiting = false;
         int opCode = memoryState.get(startingIndex);
-        Instruction instruction = InstructionFactory.getInstruction(opCode, startingIndex);
+        Instruction instruction = InstructionFactory.getInstruction(opCode, startingIndex, relativeBase);
 
         // Check if program is finished
-        if(instruction instanceof FinalizeInstruction) {
+        if (instruction instanceof FinalizeInstruction) {
             finished = true;
         }
 
-        if(instruction instanceof InputInstruction) {
-            if(inputList.size() == 0) {
+        if (instruction instanceof InputInstruction) {
+            if (inputList.size() == 0) {
                 waiting = true;
                 throw new IllegalStateException();
             }
@@ -73,8 +74,8 @@ public class IntCodeProgram {
         }
 
         int run = instruction.run(memoryState);
-        if(instruction instanceof OutputInstruction) {
-            if(handOutputTo != null) {
+        if (instruction instanceof OutputInstruction) {
+            if (handOutputTo != null) {
                 lastOutput = ((OutputInstruction) instruction).getOutput();
             }
             handOutputTo.addInput(lastOutput);
@@ -83,12 +84,13 @@ public class IntCodeProgram {
     }
 
     int pointer = 0;
-    public void runProgramUntilWaitingForInput(){
+
+    public void runProgramUntilWaitingForInput() {
 
         for (; pointer < memoryState.size() && !finished; ) {
             try {
                 pointer = processInstruction(memoryState, pointer);
-            } catch(IllegalStateException e) {
+            } catch (IllegalStateException e) {
                 // No input available, waiting.
                 return;
             }

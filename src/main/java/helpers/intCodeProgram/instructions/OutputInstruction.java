@@ -7,8 +7,8 @@ import java.util.List;
 public class OutputInstruction extends Instruction {
     private Integer output;
 
-    public OutputInstruction(int opcode, int startingIndex) {
-        super(opcode, startingIndex);
+    public OutputInstruction(int opcode, int startingIndex, int relativeBase) {
+        super(opcode, startingIndex, relativeBase);
     }
 
     @Override

@@ -13,7 +13,7 @@ class AddInstructionTest {
 
     @Test
     void run() {
-        Instruction instruction = new MultiplyInstruction(1002,0);
+        Instruction instruction = new MultiplyInstruction(1002,0, 0);
         List<Integer> memoryState = IntStream.of(1001, 4, 3, 4, 33).boxed().collect(Collectors.toList());
 
         List<Integer> answer = IntStream.of(1001, 4, 3, 4, 33).boxed().collect(Collectors.toList());

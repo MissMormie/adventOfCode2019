@@ -13,7 +13,7 @@ class InstructionTest {
 
     @Test
     void getParameters() {
-        Instruction instruction = new MultiplyInstruction(1002,0);
+        Instruction instruction = new MultiplyInstruction(1002,0, 0);
         List<Integer> memoryState = IntStream.of(1002, 4, 3, 4, 33).boxed().collect(Collectors.toList());
 
         assertEquals(33, instruction.getValueOfParam(1, memoryState));

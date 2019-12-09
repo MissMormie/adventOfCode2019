@@ -5,8 +5,8 @@ import helpers.intCodeProgram.Instruction;
 import java.util.List;
 
 public class JumpIfFalse extends Instruction {
-    public JumpIfFalse(int opcode, int startingIndex) {
-        super(opcode, startingIndex);
+    public JumpIfFalse(int opcode, int startingIndex, int relativeBase) {
+        super(opcode, startingIndex, relativeBase);
     }
 
     @Override

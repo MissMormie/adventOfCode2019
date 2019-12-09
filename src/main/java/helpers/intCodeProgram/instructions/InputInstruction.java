@@ -7,8 +7,8 @@ import java.util.List;
 public class InputInstruction extends Instruction {
     public Integer input;
 
-    public InputInstruction(int opcode, int startingIndex) {
-        super(opcode, startingIndex);
+    public InputInstruction(int opcode, int startingIndex, int relativeBase) {
+        super(opcode, startingIndex, relativeBase);
     }
 
     @Override

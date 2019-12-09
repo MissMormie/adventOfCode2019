@@ -5,8 +5,8 @@ import helpers.intCodeProgram.Instruction;
 import java.util.List;
 
 public class EqualsInstruction extends Instruction {
-    public EqualsInstruction(int opcode, int startingIndex) {
-        super(opcode, startingIndex);
+    public EqualsInstruction(int opcode, int startingIndex, int relativeBase) {
+        super(opcode, startingIndex, relativeBase);
     }
 
     @Override

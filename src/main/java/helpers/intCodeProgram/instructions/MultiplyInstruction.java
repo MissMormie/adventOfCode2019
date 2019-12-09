@@ -5,8 +5,8 @@ import helpers.intCodeProgram.Instruction;
 import java.util.List;
 
 public class MultiplyInstruction extends Instruction {
-    public MultiplyInstruction(int opcode, int startingIndex) {
-        super(opcode, startingIndex);
+    public MultiplyInstruction(int opcode, int startingIndex, int relativeBase) {
+        super(opcode, startingIndex, relativeBase);
     }
 
     @Override
