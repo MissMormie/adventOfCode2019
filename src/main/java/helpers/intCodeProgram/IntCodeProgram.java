@@ -1,5 +1,6 @@
 package helpers.intCodeProgram;
 
+import helpers.intCodeProgram.instructions.AdjustRelativeBaseInstruction;
 import helpers.intCodeProgram.instructions.FinalizeInstruction;
 import helpers.intCodeProgram.instructions.InputInstruction;
 import helpers.intCodeProgram.instructions.OutputInstruction;
@@ -79,6 +80,10 @@ public class IntCodeProgram {
                 lastOutput = ((OutputInstruction) instruction).getOutput();
             }
             handOutputTo.addInput(lastOutput);
+        }
+
+        if(instruction instanceof AdjustRelativeBaseInstruction) {
+            relativeBase += ((AdjustRelativeBaseInstruction) instruction).adjustRelativeBase;
         }
         return run;
     }

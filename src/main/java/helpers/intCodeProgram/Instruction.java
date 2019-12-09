@@ -1,9 +1,5 @@
 package helpers.intCodeProgram;
 
-import helpers.intCodeProgram.instructions.JumpIfFalse;
-import helpers.intCodeProgram.instructions.JumpIfTrue;
-import helpers.intCodeProgram.instructions.OutputInstruction;
-
 import java.util.List;
 
 import static helpers.intCodeProgram.Instruction.ParameterMode.*;
@@ -52,29 +48,6 @@ public abstract class Instruction {
      * @return new pointer value
      */
     public abstract int run(List<Integer> memoryState);
-
-    public int[] getParameters(List<Integer> memoryState, int startingIndex) {
-        int[] parameters = new int[getNumberOfParametersAndOpcode()];
-        for(int i = 0; i < getNumberOfParametersAndOpcode(); i++) {
-            parameters[i] = memoryState.get(startingIndex + i);
-        }
-        return parameters;
-    }
-
-
-
-    private ParameterMode getParameterMode(int paramPosition) {
-        // Get mode in which param is read
-        ParameterMode parameterMode = POSITION;
-
-        // This does something that seemed smart where it checks if it's the last parameter to see if it's a setter.
-        // That did no longer work for more complex opcodes, so i'm excluding those to prevent having to think.
-        if(getNumberOfParametersAndOpcode() == paramPosition + 1
-                && !(this instanceof OutputInstruction) && !(this instanceof JumpIfTrue) && !(this instanceof JumpIfFalse)  ) {
-            parameterMode = IMMEDIATE;
-        }
-        return parameterMode;
-    }
 
     public int getValueOfParam(int paramPosition, List<Integer> memoryState) {
         return getValueOfParam(paramPosition, memoryState, false);

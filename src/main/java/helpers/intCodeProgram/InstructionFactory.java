@@ -15,6 +15,7 @@ public class InstructionFactory {
             case 6: return new JumpIfFalse(startCode, startingIndex, relativeBase);
             case 7: return new LessThanInstruction(startCode, startingIndex, relativeBase);
             case 8: return new EqualsInstruction(startCode, startingIndex, relativeBase);
+            case 9: return new AdjustRelativeBaseInstruction(startCode, startingIndex, relativeBase);
             case 99: return new FinalizeInstruction(startCode, startingIndex, relativeBase);
         }
         throw new IllegalStateException("Unsupported opcode");
