@@ -2,6 +2,7 @@ package helpers.intCodeProgram.instructions;
 
 import helpers.intCodeProgram.Instruction;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class LessThanInstruction extends Instruction {
@@ -15,9 +16,9 @@ public class LessThanInstruction extends Instruction {
     }
 
     @Override
-    public int run(List<Integer> memoryState) {
-        boolean lessThan = getValueOfParam(1, memoryState) < (getValueOfParam(2, memoryState));
-        memoryState.set(getValueOfParam(3, memoryState, true), lessThan ? 1 : 0);
+    public int run(List<BigInteger> memoryState) {
+        boolean lessThan = getValueOfParam(1, memoryState).compareTo((getValueOfParam(2, memoryState)))  < 0;
+        memoryState.set(getValueOfParam(3, memoryState, true).intValue(), new BigInteger(lessThan ? "1" : "0"));
 //        System.out.println("Less Than: Setting index: " + getValueOfParam(3, memoryState) + " to: " + (lessThan ? 1 : 0));
 
         return startingIndex + getNumberOfParametersAndOpcode();

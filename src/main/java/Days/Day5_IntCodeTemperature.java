@@ -3,22 +3,23 @@ package Days;
 import helpers.StringHelper;
 import helpers.intCodeProgram.IntCodeProgram;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class Day5_IntCodeTemperature {
 
     public static int runA(String input, Integer noun, Integer verb) { // 7286649
-        List<Integer> memoryState = StringHelper.getListOfNumbersSeperatedBy(input, ",");
+        List<BigInteger> memoryState = StringHelper.getListOfBigIntegerSeperatedBy(input, ",");
         IntCodeProgram intCodeProgram = runIntCodeProgram(memoryState, null, null);
 
-        return intCodeProgram.getLastOutput();
+        return intCodeProgram.getLastOutput().intValue();
     }
 
-    public static IntCodeProgram runIntCodeProgram(List<Integer> memoryState, Integer noun, Integer verb) {
+    public static IntCodeProgram runIntCodeProgram(List<BigInteger> memoryState, Integer noun, Integer verb) {
         IntCodeProgram intCodeProgram = new IntCodeProgram(memoryState);
-        intCodeProgram.setNoun(noun);
-        intCodeProgram.setVerb(verb);
-        intCodeProgram.addInput(1);
+        intCodeProgram.setNoun(new BigInteger(noun.toString()));
+        intCodeProgram.setVerb(new BigInteger(verb.toString()));
+        intCodeProgram.addInput(new BigInteger("1"));
 
         intCodeProgram.runProgram();
         return intCodeProgram;

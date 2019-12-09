@@ -2,6 +2,7 @@ package helpers.intCodeProgram.instructions;
 
 import helpers.intCodeProgram.Instruction;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class AdjustRelativeBaseInstruction extends Instruction {
@@ -17,8 +18,8 @@ public class AdjustRelativeBaseInstruction extends Instruction {
     }
 
     @Override
-    public int run(List<Integer> memoryState) {
-        adjustRelativeBase = getValueOfParam(2, memoryState);
+    public int run(List<BigInteger> memoryState) {
+        adjustRelativeBase = getValueOfParam(2, memoryState).intValue();
         return 2;
     }
 }

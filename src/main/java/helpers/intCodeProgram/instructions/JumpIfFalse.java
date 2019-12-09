@@ -2,6 +2,7 @@ package helpers.intCodeProgram.instructions;
 
 import helpers.intCodeProgram.Instruction;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class JumpIfFalse extends Instruction {
@@ -15,10 +16,10 @@ public class JumpIfFalse extends Instruction {
     }
 
     @Override
-    public int run(List<Integer> memoryState) {
-        if (getValueOfParam(1, memoryState) == 0) {
+    public int run(List<BigInteger> memoryState) {
+        if (getValueOfParam(1, memoryState).intValue() == 0) {
 //            System.out.println("Jump if false: Changed pointer to: " + getValueOfParam(2, memoryState));
-            return getValueOfParam(2, memoryState);
+            return getValueOfParam(2, memoryState).intValue();
         } else {
 //            System.out.println("Jump if false: Changed pointer to: " + startingIndex + getNumberOfParametersAndOpcode());
             return startingIndex + getNumberOfParametersAndOpcode();

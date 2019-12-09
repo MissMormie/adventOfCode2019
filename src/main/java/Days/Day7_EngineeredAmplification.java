@@ -2,9 +2,9 @@ package Days;
 
 import helpers.intCodeProgram.IntCodeProgram;
 
+import java.math.BigInteger;
 import java.util.*;
-
-import static Days.Day7_AmplificationCircuit.getFreshMemoryState;
+import java.util.stream.Collectors;
 
 public class Day7_EngineeredAmplification {
     public static int firstInput = 0;
@@ -13,15 +13,15 @@ public class Day7_EngineeredAmplification {
 
         List<int[]> permutations = Day7_AmplificationCircuit.permute(new int[]{9, 8, 7, 6, 5});
 
-        Map<Integer, int[]> outputForSequence = new HashMap<>();
+        Map<BigInteger, int[]> outputForSequence = new HashMap<>();
 
         permutations.stream().forEach(sequence -> {
             outputForSequence.put(runProgramForSequence(sequence, input), sequence);
         });
-        return outputForSequence.keySet().stream().mapToInt(value -> value).max().getAsInt();
+        return outputForSequence.keySet().stream().mapToInt(value -> value.intValue()).max().getAsInt();
     }
 
-    public static int runProgramForSequence(int[] sequence, String input) {
+    public static BigInteger runProgramForSequence(int[] sequence, String input) {
         List<IntCodeProgram> amplifiers = getProgramsForSequence(sequence, input);
 
         boolean finished = false;
@@ -65,29 +65,33 @@ public class Day7_EngineeredAmplification {
         return amplifiers;
     }
 
+    public static List<BigInteger> getFreshMemoryState(String input) {
+        return Arrays.stream(input.split(",")).map(BigInteger::new).collect(Collectors.toList());
+    }
+
 
     public static int runA(String input) {
         List<int[]> permutations = Day7_AmplificationCircuit.permute(new int[]{0, 1, 2, 3, 4});
-        Map<Integer, int[]> outputForSequence = new HashMap<>();
+        Map<BigInteger, int[]> outputForSequence = new HashMap<>();
 
-        permutations.stream().forEach(sequence ->runAmplifiersWithSequence(sequence, outputForSequence, 0, input));
-        return outputForSequence.keySet().stream().mapToInt(value -> value).max().getAsInt();
+        permutations.stream().forEach(sequence ->runAmplifiersWithSequence(sequence, outputForSequence, new BigInteger("0"), input));
+        return outputForSequence.keySet().stream().mapToInt(value -> value.intValue()).max().getAsInt();
     }
 
-    private static void runAmplifiersWithSequence(int[] sequence, Map<Integer, int[]> outputForSequence, int firstInputValue, String input) {
-        int outputAmpA = runIntCodeProgram(getFreshMemoryState(input), sequence[0], firstInputValue);
-        int outputAmpB = runIntCodeProgram(getFreshMemoryState(input), sequence[1], outputAmpA);
-        int outputAmpC = runIntCodeProgram(getFreshMemoryState(input), sequence[2], outputAmpB);
-        int outputAmpD = runIntCodeProgram(getFreshMemoryState(input), sequence[3], outputAmpC);
-        int outputAmpE = runIntCodeProgram(getFreshMemoryState(input), sequence[4], outputAmpD);
+    private static void runAmplifiersWithSequence(int[] sequence, Map<BigInteger, int[]> outputForSequence, BigInteger firstInputValue, String input) {
+        BigInteger outputAmpA = runIntCodeProgram(getFreshMemoryState(input), new BigInteger(((Integer)sequence[0]).toString()), firstInputValue);
+        BigInteger outputAmpB = runIntCodeProgram(getFreshMemoryState(input), new BigInteger(((Integer)sequence[1]).toString()), outputAmpA);
+        BigInteger outputAmpC = runIntCodeProgram(getFreshMemoryState(input), new BigInteger(((Integer)sequence[2]).toString()), outputAmpB);
+        BigInteger outputAmpD = runIntCodeProgram(getFreshMemoryState(input), new BigInteger(((Integer)sequence[3]).toString()), outputAmpC);
+        BigInteger outputAmpE = runIntCodeProgram(getFreshMemoryState(input), new BigInteger(((Integer)sequence[4]).toString()), outputAmpD);
         outputForSequence.put(outputAmpE, sequence);
 
     }
 
 
-    public static int runIntCodeProgram(List<Integer> memoryState, int... inputs) {
+    public static BigInteger runIntCodeProgram(List<BigInteger> memoryState, BigInteger... inputs) {
         IntCodeProgram intCodeProgram = new IntCodeProgram(memoryState);
-        Arrays.stream(inputs).forEach(input -> intCodeProgram.addInput(input));
+        Arrays.stream(inputs).forEach(input -> intCodeProgram.addInput(new BigInteger(input.toString())));
 
         return intCodeProgram.runProgram();
     }

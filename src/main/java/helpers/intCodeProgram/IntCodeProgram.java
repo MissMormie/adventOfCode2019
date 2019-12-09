@@ -5,45 +5,50 @@ import helpers.intCodeProgram.instructions.FinalizeInstruction;
 import helpers.intCodeProgram.instructions.InputInstruction;
 import helpers.intCodeProgram.instructions.OutputInstruction;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class IntCodeProgram {
-    List<Integer> memoryState;
-    public Integer lastOutput;
+    List<BigInteger> memoryState;
+    public BigInteger lastOutput;
     private boolean finished = false;
     private boolean waiting = false;
     private int relativeBase = 0;
 
     public IntCodeProgram handOutputTo;
 
-    public List<Integer> inputList = new ArrayList<>();
+    public List<BigInteger> inputList = new ArrayList<>();
 
-    public IntCodeProgram(List<Integer> memoryState) {
+    public IntCodeProgram(List<BigInteger> memoryState) {
         this.memoryState = memoryState;
     }
 
-    public void addInput(int input) {
+    public void addInput(BigInteger input) {
         inputList.add(input);
+    }
+
+    public void addInput(Integer input) {
+        inputList.add(new BigInteger(input.toString()));
     }
 
     public void setHandOutputTo(IntCodeProgram handOutputTo) {
         this.handOutputTo = handOutputTo;
     }
 
-    public void setNoun(Integer noun) {
+    public void setNoun(BigInteger noun) {
         if (noun != null) {
             memoryState.set(1, noun);
         }
     }
 
-    public void setVerb(Integer verb) {
+    public void setVerb(BigInteger verb) {
         if (verb != null) {
             memoryState.set(2, verb);
         }
     }
 
-    public int runProgram() {
+    public BigInteger runProgram() {
         finished = false;
 
         for (int pointer = 0; pointer < memoryState.size() && !finished; ) {
@@ -52,13 +57,13 @@ public class IntCodeProgram {
         return lastOutput;
     }
 
-    public List<Integer> getMemoryState() {
+    public List<BigInteger> getMemoryState() {
         return memoryState;
     }
 
-    public int processInstruction(List<Integer> memoryState, int startingIndex) throws IllegalStateException {
+    public int processInstruction(List<BigInteger> memoryState, int startingIndex) throws IllegalStateException {
         waiting = false;
-        int opCode = memoryState.get(startingIndex);
+        BigInteger opCode = memoryState.get(startingIndex);
         Instruction instruction = InstructionFactory.getInstruction(opCode, startingIndex, relativeBase);
 
         // Check if program is finished
@@ -110,7 +115,7 @@ public class IntCodeProgram {
         return waiting;
     }
 
-    public Integer getLastOutput() {
+    public BigInteger getLastOutput() {
         return lastOutput;
     }
 }

@@ -2,6 +2,7 @@ package helpers.intCodeProgram.instructions;
 
 import helpers.intCodeProgram.Instruction;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class FinalizeInstruction extends Instruction {
@@ -15,7 +16,7 @@ public class FinalizeInstruction extends Instruction {
     }
 
     @Override
-    public int run(List<Integer> memoryState) {
+    public int run(List<BigInteger> memoryState) {
         return startingIndex + getNumberOfParametersAndOpcode();
     }
 }

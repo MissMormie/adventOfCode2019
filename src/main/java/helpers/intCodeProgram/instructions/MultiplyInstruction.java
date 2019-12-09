@@ -2,6 +2,7 @@ package helpers.intCodeProgram.instructions;
 
 import helpers.intCodeProgram.Instruction;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class MultiplyInstruction extends Instruction {
@@ -15,9 +16,9 @@ public class MultiplyInstruction extends Instruction {
     }
 
     @Override
-    public int run(List<Integer> memoryState) {
-        memoryState.set(getValueOfParam(3, memoryState, true) ,
-                getValueOfParam(1, memoryState) * getValueOfParam(2, memoryState));
+    public int run(List<BigInteger> memoryState) {
+        memoryState.set(getValueOfParam(3, memoryState, true).intValue() ,
+                getValueOfParam(1, memoryState).multiply(getValueOfParam(2, memoryState)));
         return startingIndex + getNumberOfParametersAndOpcode();
 
     }

@@ -1,5 +1,6 @@
 package helpers;
 
+import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,8 +18,11 @@ public class StringHelper {
     }
 
     public static List<Integer> getListOfNumbersSeperatedBy(String input, String regex) {
-        String[] split = input.split(input);
         return Arrays.stream(input.split(regex)).map(Integer::parseInt).collect(Collectors.toList());
+    }
+
+    public static List<BigInteger> getListOfBigIntegerSeperatedBy(String input, String regex) {
+        return Arrays.stream(input.split(regex)).map(BigInteger::new).collect(Collectors.toList());
     }
 
     public static String numberToStringWithXPositions(int i) {
