@@ -15,13 +15,14 @@ public abstract class Instruction {
 
     public int startingIndex;
 
-    public int relativeBase;
+    public Integer relativeBase;
 
     public ParameterMode[] parameterModes;
 
     public Instruction(int opcode, int startingIndex, int relativeBase) {
         this.opcode = opcode;
         this.startingIndex = startingIndex;
+        this.relativeBase = relativeBase;
         createParameterModes();
     }
 
@@ -62,8 +63,10 @@ public abstract class Instruction {
         if (paramMode == POSITION && !isSetter) {
             return getValueOfParamPositionMode(integerList, startingIndex, paramPosition);
         }
-        // paramMode == IMMEDIATE
-        return getValueOfParamImmediateMode(integerList, startingIndex, paramPosition);
+        if(paramMode == IMMEDIATE || paramMode == POSITION && isSetter) {
+            return getValueOfParamImmediateMode(integerList, startingIndex, paramPosition);
+        }
+        return getValueOfParamRelativeSetterMode(integerList, startingIndex, paramPosition);
     }
 
     private BigInteger getValueOfParamImmediateMode(List<BigInteger> integerList, int startingIndex, int i) {
@@ -75,7 +78,10 @@ public abstract class Instruction {
     }
 
     private BigInteger getValueOfParamRelativeMode(List<BigInteger> integerList, int startingIndex, int i) {
-        return integerList.get(integerList.get(startingIndex + i + relativeBase).intValue());
+        return integerList.get(integerList.get(startingIndex + i).intValue() + relativeBase);
     }
 
+    private BigInteger getValueOfParamRelativeSetterMode(List<BigInteger> integerList, int startingIndex, int i) {
+        return integerList.get(startingIndex + i).add(new BigInteger(relativeBase.toString()));
+    }
 }

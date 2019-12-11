@@ -20,6 +20,6 @@ public class AdjustRelativeBaseInstruction extends Instruction {
     @Override
     public int run(List<BigInteger> memoryState) {
         adjustRelativeBase = getValueOfParam(2, memoryState).intValue();
-        return 2;
+        return startingIndex + getNumberOfParametersAndOpcode();
     }
 }

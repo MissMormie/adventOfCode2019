@@ -20,6 +20,7 @@ public class OutputInstruction extends Instruction {
     @Override
     public int run(List<BigInteger> memoryState) {
         output = getValueOfParam(1, memoryState);
+        System.out.println("output for opcode: " + opcode + " is: " + output.toString());
 //        System.out.print(getValueOfParam(1, memoryState) + " ");
         return startingIndex + getNumberOfParametersAndOpcode();
     }

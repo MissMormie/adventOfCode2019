@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Coordinate implements Comparable<Coordinate> {
     public int x;
@@ -13,6 +14,11 @@ public class Coordinate implements Comparable<Coordinate> {
     public Coordinate(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 
     public Point getPoint() {

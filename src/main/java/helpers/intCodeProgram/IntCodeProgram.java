@@ -50,6 +50,10 @@ public class IntCodeProgram {
 
     public BigInteger runProgram() {
         finished = false;
+        // Sure I build actual support for larger memorySizes. But I can also just add some 0's and assume it works ;)
+        while(memoryState.size() < 10000) {
+            memoryState.add(new BigInteger("0"));
+        }
 
         for (int pointer = 0; pointer < memoryState.size() && !finished; ) {
             pointer = processInstruction(memoryState, pointer);
@@ -82,9 +86,9 @@ public class IntCodeProgram {
         int run = instruction.run(memoryState);
         if (instruction instanceof OutputInstruction) {
             if (handOutputTo != null) {
-                lastOutput = ((OutputInstruction) instruction).getOutput();
+                handOutputTo.addInput(lastOutput);
             }
-            handOutputTo.addInput(lastOutput);
+            lastOutput = ((OutputInstruction) instruction).getOutput();
         }
 
         if(instruction instanceof AdjustRelativeBaseInstruction) {

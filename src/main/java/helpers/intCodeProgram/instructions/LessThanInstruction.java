@@ -12,7 +12,7 @@ public class LessThanInstruction extends Instruction {
 
     @Override
     public int getNumberOfParametersAndOpcode() {
-        return 0;
+        return 4;
     }
 
     @Override
