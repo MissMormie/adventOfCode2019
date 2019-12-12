@@ -8,14 +8,14 @@ import java.math.BigInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class Day11_Orbits_NBodyProblemTest {
+class Day12_Orbits_NBodyProblemTest {
 
     @Test
     void createMoon() {
         String input = "<x=-1, y=0, z=2>";
         Moon moon = new Moon(new Coordinate3D(-1, 0, 2),
                 new Coordinate3D(0, 0, 0));
-        Moon createdMoon = Day11_Orbits_NBodyProblem.createMoon(input);
+        Moon createdMoon = Day12_Orbits_NBodyProblem.createMoon(input);
 
         assertEquals(true, createdMoon.equals(moon));
     }
@@ -56,7 +56,7 @@ class Day11_Orbits_NBodyProblemTest {
                 "<x=3, y=5, z=-1>";
         answer = 179;
         numTicks = 10;
-        assertEquals(answer, Day11_Orbits_NBodyProblem.runA(input, numTicks), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day12_Orbits_NBodyProblem.runA(input, numTicks), "input = " + input + " answer: " + answer);
 
 
         input = "<x=-8, y=-10, z=0>\n" +
@@ -65,7 +65,7 @@ class Day11_Orbits_NBodyProblemTest {
                 "<x=9, y=-8, z=-3>";
         answer = 1940;
         numTicks = 100;
-        assertEquals(answer, Day11_Orbits_NBodyProblem.runA(input, numTicks), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day12_Orbits_NBodyProblem.runA(input, numTicks), "input = " + input + " answer: " + answer);
     }
 
 
@@ -79,6 +79,6 @@ class Day11_Orbits_NBodyProblemTest {
                 "<x=4, y=-8, z=8>\n" +
                 "<x=3, y=5, z=-1>";
         answer = new BigInteger("2772");
-        assertEquals(answer, Day11_Orbits_NBodyProblem.runB(input), "input = " + input + " answer: " + answer);
+        assertEquals(answer, Day12_Orbits_NBodyProblem.runB(input), "input = " + input + " answer: " + answer);
     }
 }

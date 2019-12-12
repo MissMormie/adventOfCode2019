@@ -9,7 +9,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Day11_Orbits_NBodyProblem {
+public class Day12_Orbits_NBodyProblem {
 
     public static int runA(String input, int numOfTicks) {
         List<Moon> moons = getMoons(input);
@@ -60,7 +60,7 @@ public class Day11_Orbits_NBodyProblem {
     }
 
     public static List<Moon> getMoons(String input) {
-        return Arrays.stream(input.split("\n")).map(Day11_Orbits_NBodyProblem::createMoon).collect(Collectors.toList());
+        return Arrays.stream(input.split("\n")).map(Day12_Orbits_NBodyProblem::createMoon).collect(Collectors.toList());
     }
 
     public static Moon createMoon(String input) {

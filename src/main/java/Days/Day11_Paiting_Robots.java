@@ -6,7 +6,7 @@ import helpers.intCodeProgram.IntCodeProgram;
 import java.math.BigInteger;
 import java.util.List;
 
-public class Day12_Paiting_Robots {
+public class Day11_Paiting_Robots {
 
     public static int runA(String input) {
         List<BigInteger> memoryState = StringHelper.getListOfBigIntegerSeperatedBy(input, ",");
