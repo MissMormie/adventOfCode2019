@@ -3,8 +3,8 @@ package helpers;
 import java.util.Objects;
 
 public class Moon {
-    Coordinate3D position;
-    Coordinate3D velocity;
+    public Coordinate3D position;
+    public Coordinate3D velocity;
     public String name;
 
     public Moon(Coordinate3D position, Coordinate3D velocity) {

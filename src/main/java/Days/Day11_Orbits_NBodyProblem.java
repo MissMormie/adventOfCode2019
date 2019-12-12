@@ -4,6 +4,7 @@ import helpers.Coordinate3D;
 import helpers.Moon;
 import helpers.Moon.MoonPair;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -76,14 +77,102 @@ public class Day11_Orbits_NBodyProblem {
     }
 
 
-    public static int runB(String input) {
+    public static BigInteger runB(String input) {
+        List<Moon> moons = getMoons(input);
+        List<MoonPair> pairsOfMoons = createPairsOfMoon(moons);
 
+        BigInteger tick = new BigInteger("0");
 
-        // DON'T FORGET TO ADD THE ANSWER
-        return 1;
+        // variables to solve x
+        Map<String, BigInteger> xPositions = new HashMap<>();
+        BigInteger xStartRepeating = null;
+        BigInteger xStepsBeforeRepeat = null;
+        boolean xSolved = false;
+
+        // variables to solve y
+        Map<String, BigInteger> yPositions = new HashMap<>();
+        BigInteger yStartRepeating = null;
+        BigInteger yStepsBeforeRepeat = null;
+        boolean ySolved = false;
+
+        // variables to solve z
+        Map<String, BigInteger> zPositions = new HashMap<>();
+        BigInteger zStartRepeating = null;
+        BigInteger zStepsBeforeRepeat = null;
+        boolean zSolved = false;
+
+        while(!xSolved || !ySolved || !zSolved) {
+
+            // Check if x repeats
+            String xPosition = getXposition(moons);
+            if (!xSolved && !xPositions.containsKey(xPosition)) {
+                xPositions.put(xPosition, tick);
+            } else if (!xSolved) {// found first repeater
+                xStartRepeating = xPositions.get(xPosition);
+                xStepsBeforeRepeat = tick.subtract(xStartRepeating);
+                xSolved = true;
+            }
+
+            // Check if y repeats
+            String yPosition = getYpositions(moons);
+            if (!ySolved && !yPositions.containsKey(yPosition)) {
+                yPositions.put(yPosition, tick);
+            } else if (!ySolved) {// found first repeater
+                yStartRepeating = yPositions.get(yPosition);
+                yStepsBeforeRepeat = tick.subtract(yStartRepeating);
+                ySolved = true;
+            }
+
+            // Check if z repeats
+            String zPosition = getZpositions(moons);
+            if (!zSolved && !zPositions.containsKey(zPosition)) {
+                zPositions.put(zPosition, tick);
+            } else if (!zSolved) {// found first repeater
+                zStartRepeating = zPositions.get(zPosition);
+                zStepsBeforeRepeat = tick.subtract(zStartRepeating);
+                zSolved = true;
+            }
+
+            doTick(moons, pairsOfMoons);
+            tick = tick.add(new BigInteger("1"));
+        }
+
+        return getLowestCommonMultiplyer(xStepsBeforeRepeat, yStepsBeforeRepeat, zStepsBeforeRepeat);
     }
 
+    public static BigInteger getLowestCommonMultiplyer(BigInteger x, BigInteger y, BigInteger z) {
+        BigInteger lcm1 = lowestCommonMultiplyer(x, y);
+        BigInteger lcm2 = lowestCommonMultiplyer(y, z);
+        return lowestCommonMultiplyer(lcm1, lcm2);
 
+    }
+
+    public static BigInteger lowestCommonMultiplyer(BigInteger number1, BigInteger number2) {
+        BigInteger gcd = number1.gcd(number2);
+        BigInteger absProduct = number1.multiply(number2).abs();
+        return absProduct.divide(gcd);
+    }
+
+    public static String getXposition(List<Moon> moons) {
+        StringBuilder sb = new StringBuilder();
+        moons.stream().map(moon -> Integer.toString(moon.position.x)).forEach(s -> sb.append(s + "."));
+        moons.stream().map(moon -> Integer.toString(moon.velocity.x)).forEach(s -> sb.append(s + "."));
+        return sb.toString();
+    }
+
+    public static String getYpositions(List<Moon> moons) {
+        StringBuilder sb = new StringBuilder();
+        moons.stream().map(moon -> Integer.toString(moon.position.y)).forEach(s -> sb.append(s));
+        moons.stream().map(moon -> Integer.toString(moon.velocity.y)).forEach(s -> sb.append(s));
+        return sb.toString();
+    }
+
+    public static String getZpositions(List<Moon> moons) {
+        StringBuilder sb = new StringBuilder();
+        moons.stream().map(moon -> Integer.toString(moon.position.z)).forEach(s -> sb.append(s));
+        moons.stream().map(moon -> Integer.toString(moon.velocity.z)).forEach(s -> sb.append(s));
+        return sb.toString();
+    }
 
     public static void main(String[] args) {
         long startTime = System.nanoTime();

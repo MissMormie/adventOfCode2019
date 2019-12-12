@@ -4,6 +4,8 @@ import helpers.Coordinate3D;
 import helpers.Moon;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day11_Orbits_NBodyProblemTest {
@@ -70,10 +72,13 @@ class Day11_Orbits_NBodyProblemTest {
     @Test
     void runB() {
         String input;
-        int answer;
+        BigInteger answer;
 
-        input = "";
-        answer = 0;
+        input = "<x=-1, y=0, z=2>\n" +
+                "<x=2, y=-10, z=-7>\n" +
+                "<x=4, y=-8, z=8>\n" +
+                "<x=3, y=5, z=-1>";
+        answer = new BigInteger("2772");
         assertEquals(answer, Day11_Orbits_NBodyProblem.runB(input), "input = " + input + " answer: " + answer);
     }
 }
