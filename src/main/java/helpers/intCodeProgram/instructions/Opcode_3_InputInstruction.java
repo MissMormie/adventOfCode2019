@@ -5,10 +5,10 @@ import helpers.intCodeProgram.Instruction;
 import java.math.BigInteger;
 import java.util.List;
 
-public class InputInstruction extends Instruction {
+public class Opcode_3_InputInstruction extends Instruction {
     public BigInteger input;
 
-    public InputInstruction(int opcode, int startingIndex, int relativeBase) {
+    public Opcode_3_InputInstruction(int opcode, int startingIndex, int relativeBase) {
         super(opcode, startingIndex, relativeBase);
     }
 

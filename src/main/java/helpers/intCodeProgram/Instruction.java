@@ -8,7 +8,7 @@ import static helpers.intCodeProgram.Instruction.ParameterMode.*;
 public abstract class Instruction {
 
     public enum ParameterMode {
-        POSITION, IMMEDIATE, RELATIVE
+        POSITION_0, IMMEDIATE_1, RELATIVE_2
     }
 
     public int opcode;
@@ -35,13 +35,13 @@ public abstract class Instruction {
 
     private ParameterMode getParameterModes(int mode) {
         if (mode == 0) {
-            return POSITION;
+            return POSITION_0;
         }
         if (mode == 1) {
-            return IMMEDIATE;
+            return IMMEDIATE_1;
         }
         // mode == 2
-        return RELATIVE;
+        return RELATIVE_2;
     }
 
     public abstract int getNumberOfParametersAndOpcode();
@@ -57,16 +57,24 @@ public abstract class Instruction {
 
     public BigInteger getValueOfParam(int paramPosition, List<BigInteger> integerList, boolean isSetter) {
         ParameterMode paramMode = parameterModes[paramPosition];
-        if (paramMode == RELATIVE) {
-            return getValueOfParamRelativeMode(integerList, startingIndex, paramPosition);
+        if(isSetter) {
+            if(paramMode == POSITION_0 || paramMode == IMMEDIATE_1) {
+                return getValueOfParamImmediateMode(integerList, startingIndex, paramPosition);
+            } else if(paramMode == RELATIVE_2) {
+                return getValueOfParamRelativeSetterMode(integerList, startingIndex, paramPosition);
+            }
+            throw new IllegalStateException("Setter in immediate mode is not allowed at pointer " + startingIndex);
         }
-        if (paramMode == POSITION && !isSetter) {
+        if (paramMode == POSITION_0) {
             return getValueOfParamPositionMode(integerList, startingIndex, paramPosition);
         }
-        if(paramMode == IMMEDIATE || paramMode == POSITION && isSetter) {
+
+        if(paramMode == IMMEDIATE_1) {
             return getValueOfParamImmediateMode(integerList, startingIndex, paramPosition);
         }
-        return getValueOfParamRelativeSetterMode(integerList, startingIndex, paramPosition);
+
+        // paramMode == RELATIVE_2)
+        return getValueOfParamRelativeMode(integerList, startingIndex, paramPosition);
     }
 
     private BigInteger getValueOfParamImmediateMode(List<BigInteger> integerList, int startingIndex, int i) {

@@ -22,7 +22,16 @@ public class StringHelper {
     }
 
     public static List<BigInteger> getListOfBigIntegerSeperatedBy(String input, String regex) {
-        return Arrays.stream(input.split(regex)).map(BigInteger::new).collect(Collectors.toList());
+        input = input.replace(" ", "");
+        return Arrays.stream(input.split(regex)).map(stringNum -> {
+            // Big ints dont like negatives too well.
+            if(stringNum.indexOf('-') > -1) {
+                return new BigInteger(stringNum.substring(1)).negate();
+            } else {
+                return new BigInteger(stringNum);
+            }
+        }
+        ).collect(Collectors.toList());
     }
 
     public static String numberToStringWithXPositions(int i) {

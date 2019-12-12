@@ -5,22 +5,21 @@ import helpers.intCodeProgram.Instruction;
 import java.math.BigInteger;
 import java.util.List;
 
-public class AddInstruction extends Instruction {
+public class Opcode_9_AdjustRelativeBaseInstruction extends Instruction {
+    public int adjustRelativeBase;
 
-    public AddInstruction(int opcode, int startingIndex, int relativeBase) {
+    public Opcode_9_AdjustRelativeBaseInstruction(int opcode, int startingIndex, int relativeBase) {
         super(opcode, startingIndex, relativeBase);
     }
 
     @Override
     public int getNumberOfParametersAndOpcode() {
-        return 4;
+        return 2;
     }
 
     @Override
     public int run(List<BigInteger> memoryState) {
-        memoryState.set(getValueOfParam(3, memoryState, true).intValue(),
-                getValueOfParam(1, memoryState).add(getValueOfParam(2, memoryState)));
+        adjustRelativeBase = getValueOfParam(1, memoryState).intValue();
         return startingIndex + getNumberOfParametersAndOpcode();
     }
-
 }

@@ -19,11 +19,14 @@ public class Day9_SensorBoost {
     }
 
 
-    public static int runB(String input) {
+    public static BigInteger runB(String input) {
+        List<BigInteger> memoryState = StringHelper.getListOfBigIntegerSeperatedBy(input, ",");
 
+        IntCodeProgram intCodeProgram = new IntCodeProgram(memoryState);
+        intCodeProgram.addInput(new BigInteger("2"));
 
-        // DON'T FORGET TO ADD THE ANSWER
-        return 1;
+        return intCodeProgram.runProgram();
+
     }
 
 

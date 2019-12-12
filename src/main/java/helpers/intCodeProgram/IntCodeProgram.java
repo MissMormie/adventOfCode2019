@@ -1,9 +1,9 @@
 package helpers.intCodeProgram;
 
-import helpers.intCodeProgram.instructions.AdjustRelativeBaseInstruction;
-import helpers.intCodeProgram.instructions.FinalizeInstruction;
-import helpers.intCodeProgram.instructions.InputInstruction;
-import helpers.intCodeProgram.instructions.OutputInstruction;
+import helpers.intCodeProgram.instructions.Opcode_9_AdjustRelativeBaseInstruction;
+import helpers.intCodeProgram.instructions.Opcode_99_FinalizeInstruction;
+import helpers.intCodeProgram.instructions.Opcode_3_InputInstruction;
+import helpers.intCodeProgram.instructions.Opcode_4_OutputInstruction;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -71,28 +71,28 @@ public class IntCodeProgram {
         Instruction instruction = InstructionFactory.getInstruction(opCode, startingIndex, relativeBase);
 
         // Check if program is finished
-        if (instruction instanceof FinalizeInstruction) {
+        if (instruction instanceof Opcode_99_FinalizeInstruction) {
             finished = true;
         }
 
-        if (instruction instanceof InputInstruction) {
+        if (instruction instanceof Opcode_3_InputInstruction) {
             if (inputList.size() == 0) {
                 waiting = true;
                 throw new IllegalStateException();
             }
-            ((InputInstruction) instruction).input = inputList.remove(0);
+            ((Opcode_3_InputInstruction) instruction).input = inputList.remove(0);
         }
 
         int run = instruction.run(memoryState);
-        if (instruction instanceof OutputInstruction) {
+        if (instruction instanceof Opcode_4_OutputInstruction) {
             if (handOutputTo != null) {
                 handOutputTo.addInput(lastOutput);
             }
-            lastOutput = ((OutputInstruction) instruction).getOutput();
+            lastOutput = ((Opcode_4_OutputInstruction) instruction).getOutput();
         }
 
-        if(instruction instanceof AdjustRelativeBaseInstruction) {
-            relativeBase += ((AdjustRelativeBaseInstruction) instruction).adjustRelativeBase;
+        if(instruction instanceof Opcode_9_AdjustRelativeBaseInstruction) {
+            relativeBase += ((Opcode_9_AdjustRelativeBaseInstruction) instruction).adjustRelativeBase;
         }
         return run;
     }

@@ -1,6 +1,6 @@
 package helpers.intCodeProgram;
 
-import helpers.intCodeProgram.instructions.MultiplyInstruction;
+import helpers.intCodeProgram.instructions.Opcode_2_MultiplyInstruction;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigInteger;
@@ -14,7 +14,7 @@ class InstructionTest {
 
     @Test
     void getParameters() {
-        Instruction instruction = new MultiplyInstruction(1002,0, 0);
+        Instruction instruction = new Opcode_2_MultiplyInstruction(1002,0, 0);
         List<BigInteger> memoryState = IntStream.of(1002, 4, 3, 4, 33).boxed().map(integer -> new BigInteger(integer.toString())).collect(Collectors.toList());
 
         assertEquals(33, instruction.getValueOfParam(1, memoryState));
