@@ -9,14 +9,15 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-public class IntCodeProgram {
+public class IntCodeProgram implements InputReceiver {
     List<BigInteger> memoryState;
     public BigInteger lastOutput;
     private boolean finished = false;
     private boolean waiting = false;
     private int relativeBase = 0;
 
-    public IntCodeProgram handOutputTo;
+    public InputReceiver inputReceiver;
+//    public IntCodeProgram handOutputTo;
 
     public List<BigInteger> inputList = new ArrayList<>();
 
@@ -28,12 +29,18 @@ public class IntCodeProgram {
         inputList.add(input);
     }
 
+    @Override
+    public void receiveInput(BigInteger input) {
+        inputList.add(input);
+
+    }
+
     public void addInput(Integer input) {
         inputList.add(new BigInteger(input.toString()));
     }
 
-    public void setHandOutputTo(IntCodeProgram handOutputTo) {
-        this.handOutputTo = handOutputTo;
+    public void setInputReceiver(InputReceiver inputReceiver) {
+        this.inputReceiver = inputReceiver;
     }
 
     public void setNoun(BigInteger noun) {
@@ -85,8 +92,8 @@ public class IntCodeProgram {
 
         int run = instruction.run(memoryState);
         if (instruction instanceof Opcode_4_OutputInstruction) {
-            if (handOutputTo != null) {
-                handOutputTo.addInput(lastOutput);
+            if (inputReceiver != null) {
+                inputReceiver.receiveInput(lastOutput);
             }
             lastOutput = ((Opcode_4_OutputInstruction) instruction).getOutput();
         }
@@ -122,4 +129,5 @@ public class IntCodeProgram {
     public BigInteger getLastOutput() {
         return lastOutput;
     }
+
 }

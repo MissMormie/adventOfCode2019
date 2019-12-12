@@ -76,7 +76,6 @@ public class Day11_Orbits_NBodyProblem {
 
     }
 
-
     public static BigInteger runB(String input) {
         List<Moon> moons = getMoons(input);
         List<MoonPair> pairsOfMoons = createPairsOfMoon(moons);

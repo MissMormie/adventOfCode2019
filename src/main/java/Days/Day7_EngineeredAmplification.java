@@ -50,11 +50,11 @@ public class Day7_EngineeredAmplification {
         IntCodeProgram amplifyerE = new IntCodeProgram(getFreshMemoryState(input));
         amplifyerE.addInput(sequence[4]);
 
-        amplifyerA.setHandOutputTo(amplifyerB);
-        amplifyerB.setHandOutputTo(amplifyerC);
-        amplifyerC.setHandOutputTo(amplifyerD);
-        amplifyerD.setHandOutputTo(amplifyerE);
-        amplifyerE.setHandOutputTo(amplifyerA);
+        amplifyerA.setInputReceiver(amplifyerB);
+        amplifyerB.setInputReceiver(amplifyerC);
+        amplifyerC.setInputReceiver(amplifyerD);
+        amplifyerD.setInputReceiver(amplifyerE);
+        amplifyerE.setInputReceiver(amplifyerA);
 
         ArrayList<IntCodeProgram> amplifiers = new ArrayList<>();
         amplifiers.add(amplifyerA);
@@ -91,7 +91,7 @@ public class Day7_EngineeredAmplification {
 
     public static BigInteger runIntCodeProgram(List<BigInteger> memoryState, BigInteger... inputs) {
         IntCodeProgram intCodeProgram = new IntCodeProgram(memoryState);
-        Arrays.stream(inputs).forEach(input -> intCodeProgram.addInput(new BigInteger(input.toString())));
+        Arrays.stream(inputs).forEach(input -> intCodeProgram.receiveInput(new BigInteger(input.toString())));
 
         return intCodeProgram.runProgram();
     }
